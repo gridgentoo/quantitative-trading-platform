@@ -15,5 +15,6 @@
 //= require turbolinks
 //= require moment
 //= require daterangepicker
-//= require highstock.src.js
+//= require highcharts/highstock.src.js
+//= require highcharts/exporting.src.js
 //= require_tree .
