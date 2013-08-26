@@ -1,2 +1,30 @@
 <h3 style="display:inline-block;"><%= fa_icon "tasks", text: "Strategy Vault" %></h3>
 <%= link_to fa_icon("plus", text: "Add New Strategy"), strategy_path(1), class: "btn btn-primary pull-right" %>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <td>#</td>
+      <td>Name</td>
+      <td>Last Modified</td>
+      <td>Actions</td>
+    </tr>
+  </thead>
+  <tbody>
+    <% table_data = [{ name: 'Awesome Strategy based on Insider Trades', last_modified: 3.minutes.ago },
+                     { name: 'Simple strategy based on dual SMA', last_modified: 1.day.ago },
+                     { name: 'MACD Crossover', last_modified: 20.days.ago }] %>
+    <% table_data.each_with_index do |e, i| %>
+      <tr>
+        <td><%= i+1 %></td>
+        <td><%= e[:name] %></td>
+        <td><%= time_ago_in_words e[:last_modified] %> ago</td>
+        <td>
+          <button type="button" class="btn btn-primary">View</button>
+          <button type="button" class="btn btn-success">Run Backtest</button>
+          <button type="button" class="btn btn-danger">Delete</button>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
