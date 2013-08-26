@@ -37,7 +37,7 @@ ready = ->
       
       $("#backtestingChartContainer").highcharts "StockChart",
         title:
-          text: "AAPL Historical"
+          text: "Backtest Results"
         
         credits:
           enabled: false
