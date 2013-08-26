@@ -22,5 +22,55 @@ ready = ->
     endDate: moment()
     format: 'DD MMM YYYY'
 
+  $ ->
+    $.getJSON "http://www.highcharts.com/samples/data/jsonp.php?filename=aapl-ohlcv.json&callback=?", (data) ->
+      ohlc = []
+      volume = []
+      dataLength = data.length
+      i = 0
+      while i < dataLength
+        ohlc.push [data[i][0], data[i][1], data[i][2], data[i][3], data[i][4]] # close
+        volume.push [data[i][0], data[i][5]] # the volume
+        i++
+      
+      groupingUnits = [["week", [1]], ["month", [1, 2, 3, 4, 6]]]
+      
+      $("#backtestingChartContainer").highcharts "StockChart",
+        rangeSelector:
+          selected: 1
+
+        title:
+          text: "AAPL Historical"
+
+        yAxis: [
+          title:
+            text: "OHLC"
+
+          height: 200
+          lineWidth: 2
+        ,
+          title:
+            text: "Volume"
+
+          top: 300
+          height: 100
+          offset: 0
+          lineWidth: 2
+        ]
+        series: [
+          type: "candlestick"
+          name: "AAPL"
+          data: ohlc
+          dataGrouping:
+            units: groupingUnits
+        ,
+          type: "column"
+          name: "Volume"
+          data: volume
+          yAxis: 1
+          dataGrouping:
+            units: groupingUnits
+        ]
+
 $(document).ready(ready)
 $(document).on('page:load', ready)

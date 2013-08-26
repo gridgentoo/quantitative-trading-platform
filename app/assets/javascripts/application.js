@@ -15,4 +15,5 @@
 //= require turbolinks
 //= require moment
 //= require daterangepicker
+//= require highstock.src.js
 //= require_tree .

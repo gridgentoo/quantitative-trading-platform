@@ -1,0 +1,16 @@
+<h3><%= fa_icon "signal", text: "Signals" %></h3>
+<form class="form-horizontal" role="form">
+  <%= render 'signals/signal' %>
+  <div class="row">
+    <div class="col-md-5"></div>
+    <div class="col-md-2">
+      <select class="form-control input-sm">
+        <option></option>
+        <option>AND</option>
+        <option>OR</option>
+      </select>
+    </div>
+    <div class="col-md-5"></div>
+  </div>
+  <%= render 'signals/signal' %>
+</form>

@@ -13,9 +13,18 @@
  */
 
 @import "twitter/bootstrap";
+@import "font-awesome";
 @import "daterangepicker-bs3";
 
 body {
   min-height: 2000px;
   padding-top: 70px;
+
+  .row {
+    margin-top: 12px;
+  }
+
+  h3 {
+    margin: 0px 0px 8px 0px;
+  }
 }
