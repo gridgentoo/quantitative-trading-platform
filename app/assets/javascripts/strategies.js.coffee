@@ -36,38 +36,50 @@ ready = ->
       groupingUnits = [["week", [1]], ["month", [1, 2, 3, 4, 6]]]
       
       $("#backtestingChartContainer").highcharts "StockChart",
-        rangeSelector:
-          selected: 1
-
         title:
           text: "AAPL Historical"
+        
+        credits:
+          enabled: false
 
         yAxis: [
           title:
-            text: "OHLC"
-
+            text: "Prices"
           height: 200
           lineWidth: 2
         ,
           title:
-            text: "Volume"
-
+            text: "Returns"
           top: 300
+          height: 100
+          offset: 0
+          lineWidth: 2
+        ,
+          title:
+            text: "Transactions"
+          top: 400
           height: 100
           offset: 0
           lineWidth: 2
         ]
         series: [
-          type: "candlestick"
+          type: "line"
           name: "AAPL"
           data: ohlc
           dataGrouping:
             units: groupingUnits
         ,
           type: "column"
-          name: "Volume"
+          name: "Returns"
           data: volume
           yAxis: 1
+          dataGrouping:
+            units: groupingUnits
+        ,
+          type: "column"
+          name: "Transactions"
+          data: volume
+          yAxis: 2
           dataGrouping:
             units: groupingUnits
         ]
