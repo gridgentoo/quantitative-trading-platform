@@ -1,13 +1,24 @@
 <h3 style="display:inline-block;"><%= fa_icon "group", text: "Trader Connect" %></h3>
 
-<div class="media">
-  <a class="pull-left" href="#">
-    <img class="media-object" src="http://placehold.it/64x64" alt="avatar">
-  </a>
-  <div class="media-body">
-    <h4 class="media-heading">Media heading</h4>
-    <div class="media-content">
-      Lorem Ipsum
+<% posts_data = [{ heading: "", },
+                 {},] %>
+<ul class="traderConnectPosts list-unstyled">
+  <li class="postItem">
+    <div class="postWrap">
+      <a href="#"><img src="http://placehold.it/64x64" alt="avatar" class="pull-left clearfix avatar" ></a>
+      <div class="post" class="pull-left">
+        <h4 class="title">
+          <a href="#" class="text-info">Buying and Selling based on Latest News</a>
+          <small>(selling fast)</small>
+        </h4>
+        <p class="meta">
+          submitted 1 hour ago by
+          <strong><a href="#" class="text-warning">Peter</a></strong>
+        </p>
+        <p class="comments-count">
+          <a href="#" class="text-success">56 comments</a>
+        </p>
+      </div>
     </div>
-  </div>
-</div>
+  </li>
+</ul>

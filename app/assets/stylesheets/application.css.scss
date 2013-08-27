@@ -66,6 +66,24 @@ body {
     margin: 12px 8px 8px 8px;
   }
 
+  .traderConnectPosts {
+    .postItem {
+      line-height: 1.15;
+      margin-bottom: 20px;
+      min-height: 60px;
+      padding: 10px 10px 20px;
+      position: relative;
+      color: #777;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+
+      .postWrap {
+        .post {
+          margin-left: 70px;
+        }
+      }
+    }
+  }
+
   .list-unstyled {
     li {
       margin: 3px 0px;
