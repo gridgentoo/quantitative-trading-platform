@@ -2,7 +2,69 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
-ready = ->
+loadChart = ->
+  $.getJSON "http://www.highcharts.com/samples/data/jsonp.php?filename=aapl-ohlcv.json&callback=?", (data) ->
+    ohlc = []
+    volume = []
+    dataLength = data.length
+    i = 0
+    while i < dataLength
+      ohlc.push [data[i][0], data[i][1], data[i][2], data[i][3], data[i][4]] # close
+      volume.push [data[i][0], data[i][5]] # the volume
+      i++
+    
+    groupingUnits = [["week", [1]], ["month", [1, 2, 3, 4, 6]]]
+    
+    $("#backtestingChartContainer").highcharts "StockChart",
+      title:
+        text: "Backtest Results"
+      
+      credits:
+        enabled: false
+
+      yAxis: [
+        title:
+          text: "Prices"
+        height: 200
+        lineWidth: 2
+      ,
+        title:
+          text: "Returns"
+        top: 300
+        height: 100
+        offset: 0
+        lineWidth: 2
+      ,
+        title:
+          text: "Transactions"
+        top: 400
+        height: 100
+        offset: 0
+        lineWidth: 2
+      ]
+      series: [
+        type: "line"
+        name: "AAPL"
+        data: ohlc
+        dataGrouping:
+          units: groupingUnits
+      ,
+        type: "column"
+        name: "Returns"
+        data: volume
+        yAxis: 1
+        dataGrouping:
+          units: groupingUnits
+      ,
+        type: "column"
+        name: "Transactions"
+        data: volume
+        yAxis: 2
+        dataGrouping:
+          units: groupingUnits
+      ]
+
+loadDateRangePicker = ->
   $("input#inputStrategyDateRange").daterangepicker
     ranges:
       #Today: [moment(), moment()]
@@ -22,67 +84,13 @@ ready = ->
     endDate: moment()
     format: 'DD MMM YYYY'
 
-  $ ->
-    $.getJSON "http://www.highcharts.com/samples/data/jsonp.php?filename=aapl-ohlcv.json&callback=?", (data) ->
-      ohlc = []
-      volume = []
-      dataLength = data.length
-      i = 0
-      while i < dataLength
-        ohlc.push [data[i][0], data[i][1], data[i][2], data[i][3], data[i][4]] # close
-        volume.push [data[i][0], data[i][5]] # the volume
-        i++
-      
-      groupingUnits = [["week", [1]], ["month", [1, 2, 3, 4, 6]]]
-      
-      $("#backtestingChartContainer").highcharts "StockChart",
-        title:
-          text: "Backtest Results"
-        
-        credits:
-          enabled: false
+bindRunBacktestButton = ->
+  $(document).on 'click', '#btnRunBacktest', ->
+    loadChart()
 
-        yAxis: [
-          title:
-            text: "Prices"
-          height: 200
-          lineWidth: 2
-        ,
-          title:
-            text: "Returns"
-          top: 300
-          height: 100
-          offset: 0
-          lineWidth: 2
-        ,
-          title:
-            text: "Transactions"
-          top: 400
-          height: 100
-          offset: 0
-          lineWidth: 2
-        ]
-        series: [
-          type: "line"
-          name: "AAPL"
-          data: ohlc
-          dataGrouping:
-            units: groupingUnits
-        ,
-          type: "column"
-          name: "Returns"
-          data: volume
-          yAxis: 1
-          dataGrouping:
-            units: groupingUnits
-        ,
-          type: "column"
-          name: "Transactions"
-          data: volume
-          yAxis: 2
-          dataGrouping:
-            units: groupingUnits
-        ]
+ready = ->
+  loadDateRangePicker()
+  bindRunBacktestButton()
 
 $(document).ready(ready)
 $(document).on('page:load', ready)
