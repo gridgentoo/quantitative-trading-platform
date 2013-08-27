@@ -18,14 +18,9 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#">Quantrade</a>
+        <%= link_to "Quantrade", root_url, class: "navbar-brand" %>
       </div>
       <div class="navbar-collapse collapse">
-        <ul class="nav navbar-nav">
-          <li class="active"><a href="#">Home</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
         <ul class="nav navbar-nav navbar-right">
           <li><%= link_to "Trader Connect", traders_connect_path %></li>
           <li><%= link_to "Strategy Vault", strategies_path %></li>
