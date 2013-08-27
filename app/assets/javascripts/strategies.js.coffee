@@ -1,8 +1,6 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://coffeescript.org/
-
 loadChart = ->
+  window.chartContainer.hide()
+  window.loadingThrobber.show()
   $.getJSON "http://www.highcharts.com/samples/data/jsonp.php?filename=aapl-ohlcv.json&callback=?", (data) ->
     ohlc = []
     volume = []
@@ -12,13 +10,16 @@ loadChart = ->
       ohlc.push [data[i][0], data[i][1], data[i][2], data[i][3], data[i][4]] # close
       volume.push [data[i][0], data[i][5]] # the volume
       i++
-    
+
     groupingUnits = [["week", [1]], ["month", [1, 2, 3, 4, 6]]]
-    
+
+    window.loadingThrobber.hide()
+    window.chartContainer.show()
+
     $("#backtestingChartContainer").highcharts "StockChart",
       title:
         text: "Backtest Results"
-      
+
       credits:
         enabled: false
 
@@ -89,6 +90,8 @@ bindRunBacktestButton = ->
     loadChart()
 
 ready = ->
+  window.loadingThrobber = $("#backtestingChartThrobber")
+  window.chartContainer = $("#backtestingChartContainer")
   loadDateRangePicker()
   bindRunBacktestButton()
 

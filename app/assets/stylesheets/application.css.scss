@@ -16,6 +16,40 @@
 @import "font-awesome";
 @import "daterangepicker-bs3";
 
+@-webkit-keyframes throbber {
+  0% {
+    color: #333;
+  }
+  33% {
+    color: #ccc;
+  }
+  100% {
+    color: #ccc;
+  }
+}
+
+/* CSS3 throbber starts here. Reference: https://gist.github.com/ceol/5655767 */
+.throb-group {
+  display: none;
+  text-align: center;
+}
+
+.throb-group .icon-throb {
+  display: inline-block;
+  -webkit-animation: throbber 1s .165s infinite steps(3);
+  font-size: 14px;
+  color: #ccc;
+}
+
+.throb-group .icon-throb:nth-child(2) {
+  -webkit-animation-delay: .33s;
+}
+
+.throb-group .icon-throb:nth-child(3) {
+  -webkit-animation-delay: .495s;
+}
+/* CSS3 throbber ends here */
+
 body {
   min-height: 800px;
   padding-top: 70px;
@@ -27,7 +61,7 @@ body {
   h3 {
     margin: 0px 0px 8px 0px;
   }
-  
+
   #backtestButtonContainer {
     margin: 12px 8px 8px 8px;
   }
