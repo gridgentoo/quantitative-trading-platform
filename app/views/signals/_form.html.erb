@@ -13,4 +13,14 @@
     <div class="col-md-5"></div>
   </div>
   <%= render 'signals/signal' %>
+  <div class="row">
+    <div id="backtestButtonContainer" class="pull-right">
+      <button type="button" class="btn btn-primary">
+        <%= fa_icon "save", text: "Save" %>
+      </button>
+      <button type="button" class="btn btn-success">
+        <%= fa_icon "play", text: "Run Backtest" %>
+      </button>
+    </div>
+  </div>
 </form>
