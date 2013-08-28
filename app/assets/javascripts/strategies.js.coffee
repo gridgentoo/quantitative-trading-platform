@@ -13,7 +13,7 @@ loadChartData = (chart)->
     progress = Math.round( 100 - window.volume.length / window.initialProgressSize * 100 ) + '%'
     $('#backtestProgressBar').css 'width', progress
     $('#backtestProgressPercentage').text progress
-    if window.ohlc.length == 0 and window.volume.length == 0
+    if window.loadChartDataDelay && window.ohlc.length == 0 and window.volume.length == 0
       clearInterval window.loadChartDataDelay
   , 200
 
@@ -108,7 +108,7 @@ loadDateRangePicker = ->
     format: 'DD MMM YYYY'
 
 runTest = ->
-  clearInterval window.loadChartDataDelay
+  clearInterval window.loadChartDataDelay if window.loadChartDataDelay
   $('#backtestProgressBar').css 'width', '0%'
   $('#backtestProgressPercentage').text '0%'
   window.chartContainer.html ''
