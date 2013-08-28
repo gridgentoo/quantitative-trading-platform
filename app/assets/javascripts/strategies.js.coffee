@@ -8,18 +8,16 @@ addChartPoint = (chart)->
 
 loadChartData = (chart)->
   window.initialProgressSize = window.volume.length
-  delay = setInterval ->
+  window.loadChartDataDelay = setInterval ->
     addChartPoint chart
     progress = Math.round( 100 - window.volume.length / window.initialProgressSize * 100 ) + '%'
     $('#backtestProgressBar').css 'width', progress
     $('#backtestProgressPercentage').text progress
     if window.ohlc.length == 0 and window.volume.length == 0
-      clearInterval delay
+      clearInterval window.loadChartDataDelay
   , 200
 
 loadChart = ->
-  window.chartContainer.hide()
-  window.loadingThrobber.show()
   $.getJSON "http://www.highcharts.com/samples/data/jsonp.php?filename=aapl-ohlcv.json&callback=?", (data) ->
     window.ohlc = []
     window.volume = []
@@ -37,7 +35,6 @@ loadChart = ->
     groupingUnits = [["week", [1]], ["month", [1, 2, 3, 4, 6]]]
 
     window.loadingThrobber.hide()
-    window.chartContainer.show()
 
     $("#backtestingChartContainer").highcharts "StockChart",
       title:
@@ -110,9 +107,21 @@ loadDateRangePicker = ->
     endDate: moment()
     format: 'DD MMM YYYY'
 
+runTest = ->
+  clearInterval window.loadChartDataDelay
+  $('#backtestProgressBar').css 'width', '0%'
+  $('#backtestProgressPercentage').text '0%'
+  window.chartContainer.html ''
+  window.loadingThrobber.show()
+  $('body').animate
+    scrollTop: $('#backtestProgressBarContainer').offset().top
+  , 500, ->
+    loadChart()
+
+
 bindRunBacktestButton = ->
   $(document).on 'click', '#btnRunBacktest', ->
-    loadChart()
+    runTest()
 
 ready = ->
   window.loadingThrobber = $("#backtestingChartThrobber")
