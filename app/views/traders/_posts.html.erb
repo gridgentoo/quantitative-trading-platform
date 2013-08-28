@@ -1,31 +1,45 @@
 <h3 style="display:inline-block;"><%= fa_icon "group", text: "Trader Connect" %></h3>
 
-<% posts_data = [{ heading: "Buying and Selling based on Latest News", subheading: "selling fast", author: "Peter" },
-                 { heading: "KLCI breaks below 1700 level, falls 14pts", subheading: nil, author: "Warren" },
-                 { heading: "MACD and Stochastic Double-Cross Strategy", subheading: "limited to 10 pax", author: "Michael" }] %>
+<% posts_data = [{ heading: "Buying and Selling based on Latest News", subheading: "selling fast", author: "Peter", sell: true },
+                 { heading: "KLCI breaks below 1700 level, falls 14pts", subheading: nil, author: "Warren", sell: false},
+                 { heading: "MACD and Stochastic Double-Cross Strategy", subheading: "limited to 10 pax", author: "Michael", sell:true }] %>
 <ul class="traderConnectPosts list-unstyled">
   <% posts_data.each_with_index do |post, i| %>
     <li class="postItem">
       <div class="postWrap">
-        <a href="#"><img src="http://placehold.it/64x64" alt="avatar" class="pull-left clearfix avatar" ></a>
-        <div class="post" class="pull-left">
-          <h4 class="title">
-            <a href="#" class="text-info"><%= post[:heading] %></a>
-            <% if post[:subheading].present? %>
-              <small>(<%= post[:subheading] %>)</small>
-            <% end %>
-          </h4>
-          <p class="meta">
-            submitted <%= time_ago_in_words (i+1).hours.ago %> ago by
-            <strong><a href="#" class="text-warning"><%= post[:author] %></a></strong>
-          </p>
-          <p class="socialLinksButtons">
-            <a href="#" class="text-success"><%= fa_icon "comments", text: "#{(5 + rand(10)).to_i % 10} comments" %></a>
-            <button class="btn btn-xs btn-facebook"><i class="icon-facebook"></i> Share on Facebook</button>
-            <button class="btn btn-xs btn-twitter"><i class="icon-twitter"></i> Tweet this</button>
-            <button class="btn btn-xs btn-google-plus"><i class="icon-google-plus"></i> +1 on Google</button>
-            <button class="btn btn-xs btn-weibo"><i class="icon-weibo"></i> 微博分享</button>
-          </p>
+        <div class="row">
+          <div class="col-md-1">
+            <a href="#"><img src="http://placehold.it/64x64" alt="avatar" class="pull-left clearfix avatar" ></a>
+          </div>
+          <div class="col-md-9">
+            <div class="post" class="pull-left">
+              <h4 class="title">
+                <a href="#" class="text-info"><%= post[:heading] %></a>
+                <% if post[:subheading].present? %>
+                  <small>(<%= post[:subheading] %>)</small>
+                <% end %>
+              </h4>
+              <p class="meta">
+                submitted <%= time_ago_in_words (i+1).hours.ago %> ago by
+                <strong><a href="#" class="text-warning"><%= post[:author] %></a></strong>
+              </p>
+              <p class="socialLinksButtons">
+                <a href="#" class="text-success"><%= fa_icon "comments", text: pluralize((5 + rand(10)).to_i % 10, 'comment') %></a>
+                <button class="btn btn-xs btn-facebook"><i class="icon-facebook"></i> Share on Facebook</button>
+                <button class="btn btn-xs btn-twitter"><i class="icon-twitter"></i> Tweet this</button>
+                <button class="btn btn-xs btn-google-plus"><i class="icon-google-plus"></i> +1 on Google</button>
+                <button class="btn btn-xs btn-weibo"><i class="icon-weibo"></i> 微博分享</button>
+              </p>
+            </div>
+          </div>
+          <% if post[:sell] %>
+            <div class="col-md-2">
+              <button class="btn btn-success">
+                <%= fa_icon "credit-card", class: 'icon-bg' %><br />
+                <span><strong>Purchase</strong><br> <%= pluralize (5 + rand(10)).to_i % 10 + 1, 'credit' %></span>
+              </button>
+            </div>
+          <% end %>
         </div>
       </div>
     </li>

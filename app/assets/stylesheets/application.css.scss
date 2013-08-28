@@ -79,7 +79,10 @@ body {
 
       .postWrap {
         .post {
-          margin-left: 70px;
+          margin-left: 2%;
+          .title {
+            margin-top: 0px;
+          }
         }
       }
     }
