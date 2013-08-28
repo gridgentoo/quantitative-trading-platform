@@ -7,11 +7,15 @@ addChartPoint = (chart)->
   chart.redraw()
 
 loadChartData = (chart)->
+  window.initialProgressSize = window.volume.length
   delay = setInterval ->
-    addChartPoint(chart)
+    addChartPoint chart
+    progress = Math.round( 100 - window.volume.length / window.initialProgressSize * 100 ) + '%'
+    $('#backtestProgressBar').css 'width', progress
+    $('#backtestProgressPercentage').text progress
     if window.ohlc.length == 0 and window.volume.length == 0
       clearInterval delay
-  , 0.01
+  , 200
 
 loadChart = ->
   window.chartContainer.hide()
@@ -25,6 +29,10 @@ loadChart = ->
       window.ohlc.push [data[i][0], data[i][1], data[i][2], data[i][3], data[i][4]] # close
       window.volume.push [data[i][0], data[i][5]] # the volume
       i++
+
+    # client-side simulation is slow so we slice only recent data
+    window.ohlc = window.ohlc.slice(-200)
+    window.volume = window.volume.slice(-200)
 
     groupingUnits = [["week", [1]], ["month", [1, 2, 3, 4, 6]]]
 
