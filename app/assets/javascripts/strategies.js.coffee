@@ -4,18 +4,30 @@ addChartPoint = (chart)->
   chart.series[0].addPoint ohlc_tick, false
   chart.series[1].addPoint volume_tick, false
   chart.series[2].addPoint volume_tick, false
+  false
+
+addAndRefreshChartAndIndicatiors = (chart)->
+  for i in [0...200]
+    break if window.ohlc.length == 0 and window.volume.length == 0
+    addChartPoint chart
   chart.redraw()
+  progress = Math.round( 100 - window.volume.length / window.initialProgressSize * 100 ) + '%'
+  $('#backtestProgressBar').css 'width', progress
+  $('#backtestProgressPercentage').text progress
 
 loadChartData = (chart)->
   window.initialProgressSize = window.volume.length
+  # start plotting data on chart
+  addAndRefreshChartAndIndicatiors chart
+
+  # set interval to simulate data streaming
   window.loadChartDataDelay = setInterval ->
-    addChartPoint chart
-    progress = Math.round( 100 - window.volume.length / window.initialProgressSize * 100 ) + '%'
-    $('#backtestProgressBar').css 'width', progress
-    $('#backtestProgressPercentage').text progress
+    addAndRefreshChartAndIndicatiors chart
     if window.loadChartDataDelay && window.ohlc.length == 0 and window.volume.length == 0
       clearInterval window.loadChartDataDelay
-  , 200
+      false
+  , 1000
+  false
 
 loadChart = ->
   $.getJSON "http://www.highcharts.com/samples/data/jsonp.php?filename=aapl-ohlcv.json&callback=?", (data) ->
@@ -27,10 +39,6 @@ loadChart = ->
       window.ohlc.push [data[i][0], data[i][1], data[i][2], data[i][3], data[i][4]] # close
       window.volume.push [data[i][0], data[i][5]] # the volume
       i++
-
-    # client-side simulation is slow so we slice only recent data
-    window.ohlc = window.ohlc.slice(-200)
-    window.volume = window.volume.slice(-200)
 
     groupingUnits = [["week", [1]], ["month", [1, 2, 3, 4, 6]]]
 
