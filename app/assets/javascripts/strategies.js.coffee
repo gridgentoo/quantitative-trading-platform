@@ -2,11 +2,14 @@ addChartPoint = (chart)->
   adj_close_tick = window.adj_close_data.shift()
   ind1_tick = window.ind1_data.shift()
   ind2_tick = window.ind2_data.shift()
+  # Prevent position fill data from getting ahead of the rest
+  if window.position_fill_data.length > 0 and window.position_fill_data[0][0] <= adj_close_tick[0]
+    position_fill_tick = window.position_fill_data.shift()
   volume_tick = window.volume_data.shift()
   chart.series[0].addPoint adj_close_tick, false
   chart.series[1].addPoint ind1_tick, false
   chart.series[2].addPoint ind2_tick, false
-  chart.series[3].addPoint volume_tick, false
+  chart.series[3].addPoint(position_fill_tick, false) if position_fill_tick
   chart.series[4].addPoint volume_tick, false
   false
 
@@ -38,6 +41,7 @@ loadChart = ->
   window.ind1_data = $("#backtestingChartContainer").data('ind1').slice(0)
   window.ind2_data = $("#backtestingChartContainer").data('ind2').slice(0)
   window.volume_data = $("#backtestingChartContainer").data('volume').slice(0)
+  window.position_fill_data = $("#backtestingChartContainer").data('position_fill').slice(0)
 
   groupingUnits = [["week", [1]], ["month", [1, 2, 3, 4, 6]]]
 
@@ -57,14 +61,14 @@ loadChart = ->
       lineWidth: 2
     ,
       title:
-        text: "Returns"
+        text: "Position Fill"
       top: 300
       height: 100
       offset: 0
       lineWidth: 2
     ,
       title:
-        text: "Transactions"
+        text: "Returns"
       top: 400
       height: 100
       offset: 0
@@ -95,15 +99,15 @@ loadChart = ->
       tooltip:
         valueDecimals: 2
     ,
-      type: "column"
-      name: "Returns"
+      name: "Position Fill"
       data: []
+      step: true
       yAxis: 1
       dataGrouping:
         units: groupingUnits
     ,
       type: "column"
-      name: "Transactions"
+      name: "Returns"
       data: []
       yAxis: 2
       dataGrouping:

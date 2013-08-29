@@ -26,7 +26,7 @@
 </div>
 
 <%= javascript_tag do %>
-  <% { adj_close: @adj_close, ind1: @ind1, ind2: @ind2, volume: @volume }.each do |k, v| %>
+  <% { adj_close: @adj_close, ind1: @ind1, ind2: @ind2, volume: @volume, position_fill: @position_fill }.each do |k, v| %>
     $("#backtestingChartContainer").data('<%= k.to_s %>', [
       <%= raw (v||[]).map { |x| "[Date.UTC(#{x[:datetime].year}, #{x[:datetime].month - 1}, #{x[:datetime].day}), #{x[:value]}]" }.join(',') %>
     ]);
