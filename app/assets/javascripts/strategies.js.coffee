@@ -34,78 +34,77 @@ loadChartData = (chart)->
   false
 
 loadChart = ->
-  $.getJSON "http://www.highcharts.com/samples/data/jsonp.php?filename=aapl-ohlcv.json&callback=?", (data) ->
-    window.adj_close_data = $("#backtestingChartContainer").data('adj_close')
-    window.ind1_data = $("#backtestingChartContainer").data('ind1')
-    window.ind2_data = $("#backtestingChartContainer").data('ind2')
-    window.volume_data = $("#backtestingChartContainer").data('volume')
+  window.adj_close_data = $("#backtestingChartContainer").data('adj_close').slice(0)
+  window.ind1_data = $("#backtestingChartContainer").data('ind1').slice(0)
+  window.ind2_data = $("#backtestingChartContainer").data('ind2').slice(0)
+  window.volume_data = $("#backtestingChartContainer").data('volume').slice(0)
 
-    groupingUnits = [["week", [1]], ["month", [1, 2, 3, 4, 6]]]
+  groupingUnits = [["week", [1]], ["month", [1, 2, 3, 4, 6]]]
 
-    window.loadingThrobber.hide()
+  window.loadingThrobber.hide()
 
-    $("#backtestingChartContainer").highcharts "StockChart",
+  $("#backtestingChartContainer").highcharts "StockChart",
+    title:
+      text: "Backtest Results"
+
+    credits:
+      enabled: false
+
+    yAxis: [
       title:
-        text: "Backtest Results"
-
-      credits:
-        enabled: false
-
-      yAxis: [
-        title:
-          text: "Prices"
-        height: 200
-        lineWidth: 2
-      ,
-        title:
-          text: "Returns"
-        top: 300
-        height: 100
-        offset: 0
-        lineWidth: 2
-      ,
-        title:
-          text: "Transactions"
-        top: 400
-        height: 100
-        offset: 0
-        lineWidth: 2
-      ]
-      series: [
-        type: "line"
-        name: "AAPL"
-        data: []
-        dataGrouping:
-          units: groupingUnits
-      ,
-        type: "line"
-        name: "SMA 50"
-        data: []
-        dataGrouping:
-          units: groupingUnits
-      ,
-        type: "line"
-        name: "SMA 250"
-        data: []
-        dataGrouping:
-          units: groupingUnits
-      ,
-        type: "column"
-        name: "Returns"
-        data: []
-        yAxis: 1
-        dataGrouping:
-          units: groupingUnits
-      ,
-        type: "column"
-        name: "Transactions"
-        data: []
-        yAxis: 2
-        dataGrouping:
-          units: groupingUnits
-      ]
-    , (chart) ->
-      loadChartData(chart) # load data progressively
+        text: "Prices"
+      height: 200
+      lineWidth: 2
+    ,
+      title:
+        text: "Returns"
+      top: 300
+      height: 100
+      offset: 0
+      lineWidth: 2
+    ,
+      title:
+        text: "Transactions"
+      top: 400
+      height: 100
+      offset: 0
+      lineWidth: 2
+    ]
+    series: [
+      type: "line"
+      name: "AAPL"
+      data: []
+      dataGrouping:
+        units: groupingUnits
+    ,
+      type: "line"
+      name: "SMA 50"
+      data: []
+      dataGrouping:
+        units: groupingUnits
+    ,
+      type: "line"
+      name: "SMA 250"
+      data: []
+      dataGrouping:
+        units: groupingUnits
+    ,
+      type: "column"
+      name: "Returns"
+      data: []
+      yAxis: 1
+      dataGrouping:
+        units: groupingUnits
+    ,
+      type: "column"
+      name: "Transactions"
+      data: []
+      yAxis: 2
+      dataGrouping:
+        units: groupingUnits
+    ]
+  , (chart) ->
+    loadChartData(chart) # load data progressively
 
 loadDateRangePicker = ->
   $("input#inputStrategyDateRange").daterangepicker
