@@ -1,29 +1,33 @@
 addChartPoint = (chart)->
-  ohlc_tick = window.ohlc.shift()
-  volume_tick = window.volume.shift()
-  chart.series[0].addPoint ohlc_tick, false
-  chart.series[1].addPoint volume_tick, false
-  chart.series[2].addPoint volume_tick, false
+  adj_close_tick = window.adj_close_data.shift()
+  ind1_tick = window.ind1_data.shift()
+  ind2_tick = window.ind2_data.shift()
+  volume_tick = window.volume_data.shift()
+  chart.series[0].addPoint volume_tick, false
+  chart.series[1].addPoint ind1_tick, false
+  chart.series[2].addPoint ind2_tick, false
+  chart.series[3].addPoint volume_tick, false
+  chart.series[4].addPoint volume_tick, false
   false
 
 addAndRefreshChartAndIndicatiors = (chart)->
   for i in [0...200]
-    break if window.ohlc.length == 0 and window.volume.length == 0
+    break if window.volume_data.length == 0
     addChartPoint chart
   chart.redraw()
-  progress = Math.round( 100 - window.volume.length / window.initialProgressSize * 100 ) + '%'
+  progress = Math.round( 100 - window.volume_data.length / window.initialProgressSize * 100 ) + '%'
   $('#backtestProgressBar').css 'width', progress
   $('#backtestProgressPercentage').text progress
 
 loadChartData = (chart)->
-  window.initialProgressSize = window.volume.length
+  window.initialProgressSize = window.volume_data.length
   # start plotting data on chart
   addAndRefreshChartAndIndicatiors chart
 
   # set interval to simulate data streaming
   window.loadChartDataDelay = setInterval ->
     addAndRefreshChartAndIndicatiors chart
-    if window.loadChartDataDelay && window.ohlc.length == 0 and window.volume.length == 0
+    if window.loadChartDataDelay && window.adj_close_data.length == 0 and window.volume_data.length == 0
       clearInterval window.loadChartDataDelay
       false
   , 1000
@@ -31,14 +35,10 @@ loadChartData = (chart)->
 
 loadChart = ->
   $.getJSON "http://www.highcharts.com/samples/data/jsonp.php?filename=aapl-ohlcv.json&callback=?", (data) ->
-    window.ohlc = []
-    window.volume = []
-    dataLength = data.length
-    i = 0
-    while i < dataLength
-      window.ohlc.push [data[i][0], data[i][1], data[i][2], data[i][3], data[i][4]] # close
-      window.volume.push [data[i][0], data[i][5]] # the volume
-      i++
+    window.adj_close_data = $("#backtestingChartContainer").data('adj_close')
+    window.ind1_data = $("#backtestingChartContainer").data('ind1')
+    window.ind2_data = $("#backtestingChartContainer").data('ind2')
+    window.volume_data = $("#backtestingChartContainer").data('volume')
 
     groupingUnits = [["week", [1]], ["month", [1, 2, 3, 4, 6]]]
 
@@ -74,6 +74,18 @@ loadChart = ->
       series: [
         type: "line"
         name: "AAPL"
+        data: []
+        dataGrouping:
+          units: groupingUnits
+      ,
+        type: "line"
+        name: "SMA 50"
+        data: []
+        dataGrouping:
+          units: groupingUnits
+      ,
+        type: "line"
+        name: "SMA 250"
         data: []
         dataGrouping:
           units: groupingUnits
