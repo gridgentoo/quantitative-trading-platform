@@ -76,18 +76,24 @@ loadChart = ->
       data: []
       dataGrouping:
         units: groupingUnits
+      tooltip:
+        valueDecimals: 2
     ,
       type: "line"
       name: "SMA 50"
       data: []
       dataGrouping:
         units: groupingUnits
+      tooltip:
+        valueDecimals: 2
     ,
       type: "line"
       name: "SMA 250"
       data: []
       dataGrouping:
         units: groupingUnits
+      tooltip:
+        valueDecimals: 2
     ,
       type: "column"
       name: "Returns"
