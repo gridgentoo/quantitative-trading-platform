@@ -27,7 +27,7 @@ loadChartData = (chart)->
   # set interval to simulate data streaming
   window.loadChartDataDelay = setInterval ->
     addAndRefreshChartAndIndicatiors chart
-    if window.loadChartDataDelay && window.adj_close_data.length == 0 and window.volume_data.length == 0
+    if window.loadChartDataDelay and window.volume_data.length == 0
       clearInterval window.loadChartDataDelay
       false
   , 1000
