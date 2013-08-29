@@ -3,7 +3,7 @@ addChartPoint = (chart)->
   ind1_tick = window.ind1_data.shift()
   ind2_tick = window.ind2_data.shift()
   volume_tick = window.volume_data.shift()
-  chart.series[0].addPoint volume_tick, false
+  chart.series[0].addPoint adj_close_tick, false
   chart.series[1].addPoint ind1_tick, false
   chart.series[2].addPoint ind2_tick, false
   chart.series[3].addPoint volume_tick, false
