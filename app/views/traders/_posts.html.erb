@@ -1,15 +1,15 @@
 <h3 style="display:inline-block;"><%= fa_icon "group", text: "Trader Connect" %></h3>
 
-<% posts_data = [{ heading: "Buying and Selling based on Latest News", subheading: "selling fast", author: "Peter", sell: true },
-                 { heading: "KLCI breaks below 1700 level, falls 14pts", subheading: nil, author: "Warren", sell: false},
-                 { heading: "MACD and Stochastic Double-Cross Strategy", subheading: "limited to 10 pax", author: "Michael", sell:true }] %>
+<% posts_data = [{ heading: "Buying and Selling based on Latest News", subheading: "selling fast", author: "George", avatar: 'george.jpg', sell: true },
+                 { heading: "KLCI breaks below 1700 level, falls 14pts", subheading: nil, author: "Warren", avatar: 'warren.png', sell: false},
+                 { heading: "MACD and Stochastic Double-Cross Strategy", subheading: "limited to 10 pax", author: "Megan", avatar: 'megan.jpg', sell:true }] %>
 <ul class="traderConnectPosts list-unstyled">
   <% posts_data.each_with_index do |post, i| %>
     <li class="postItem">
       <div class="postWrap">
         <div class="row">
           <div class="col-md-1">
-            <a href="#"><img src="http://placehold.it/64x64" alt="avatar" class="pull-left clearfix avatar" ></a>
+            <a href="#"><%= image_tag asset_path("demo/#{post[:avatar]}"), alt: "avatar", class: "pull-left clearfix avatar" %></a>
           </div>
           <div class="col-md-9">
             <div class="post" class="pull-left">
