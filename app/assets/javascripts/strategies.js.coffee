@@ -62,7 +62,7 @@ loadChart = ->
     ,
       title:
         text: "Position Fill"
-      top: 300
+      top: 280
       height: 100
       offset: 0
       lineWidth: 2
