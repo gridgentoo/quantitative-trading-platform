@@ -72,6 +72,14 @@ body {
     font-weight: bold;
   }
 
+  form#signalsForm .col-md-1, .col-md-2 {
+    padding-right: 4px;
+  }
+
+  form#signalsForm .col-md-1 {
+    padding-left: 0px;
+  }
+
   .traderConnectPosts {
     .postItem {
       line-height: 1.15;
