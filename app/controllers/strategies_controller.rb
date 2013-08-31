@@ -9,6 +9,7 @@ class StrategiesController < ApplicationController
     @ind2 = []
     @volume = []
     @position_fill = []
+    @daily_rets = []
 
     csv = CSV.read( Rails.root.join('demo', 'mktdata.csv') )
     csv.shift
@@ -43,6 +44,16 @@ class StrategiesController < ApplicationController
       @position_fill << {
         datetime: datetime,
         value: prev >= 0 ? (@position_fill[prev][:value] + r[1].to_i) : r[1].to_i
+      }
+    end
+
+    csv3 = CSV.read( Rails.root.join('demo', 'retsdata.csv') )
+    csv3.shift
+    csv3.each_with_index do |r, i|
+      datetime = Date.parse r[0]
+      @daily_rets << {
+        datetime: datetime,
+        value: r[1].to_f
       }
     end
   end

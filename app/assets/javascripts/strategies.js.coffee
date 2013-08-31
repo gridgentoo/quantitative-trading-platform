@@ -6,11 +6,12 @@ addChartPoint = (chart)->
   if window.position_fill_data.length > 0 and window.position_fill_data[0][0] <= adj_close_tick[0]
     position_fill_tick = window.position_fill_data.shift()
   volume_tick = window.volume_data.shift()
+  daily_rets_tick = window.daily_rets_data.shift()
   chart.series[0].addPoint adj_close_tick, false
   chart.series[1].addPoint ind1_tick, false
   chart.series[2].addPoint ind2_tick, false
   chart.series[3].addPoint(position_fill_tick, false) if position_fill_tick
-  chart.series[4].addPoint volume_tick, false
+  chart.series[4].addPoint daily_rets_tick, false
   false
 
 addAndRefreshChartAndIndicatiors = (chart)->
@@ -42,6 +43,7 @@ loadChart = ->
   window.ind2_data = $("#backtestingChartContainer").data('ind2').slice(0)
   window.volume_data = $("#backtestingChartContainer").data('volume').slice(0)
   window.position_fill_data = $("#backtestingChartContainer").data('position_fill').slice(0)
+  window.daily_rets_data = $("#backtestingChartContainer").data('daily_rets').slice(0)
 
   groupingUnits = [["week", [1]], ["month", [1, 2, 3, 4, 6]]]
 
@@ -68,7 +70,7 @@ loadChart = ->
       lineWidth: 2
     ,
       title:
-        text: "Returns"
+        text: "Daily Returns"
       top: 400
       height: 100
       offset: 0
@@ -107,11 +109,13 @@ loadChart = ->
         units: groupingUnits
     ,
       type: "column"
-      name: "Returns"
+      name: "Daily Returns"
       data: []
       yAxis: 2
       dataGrouping:
         units: groupingUnits
+      tooltip:
+        valueDecimals: 2
     ]
   , (chart) ->
     loadChartData(chart) # load data progressively
