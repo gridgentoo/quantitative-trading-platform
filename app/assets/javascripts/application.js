@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //=# require turbolinks
+//= require twitter/bootstrap
 //= require moment
 //= require daterangepicker
 //= require highcharts/highstock.src.js

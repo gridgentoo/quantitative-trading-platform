@@ -144,6 +144,7 @@ runTest = ->
   clearInterval window.loadChartDataDelay if window.loadChartDataDelay
   $('#backtestProgressBar').css 'width', '0%'
   $('#backtestProgressPercentage').text '0%'
+  $('#backtestingResultTabs').show()
   window.chartContainer.html ''
   window.loadingThrobber.show()
   $('body').animate
@@ -156,10 +157,16 @@ bindRunBacktestButton = ->
   $(document).on 'click', '#btnRunBacktest', ->
     runTest()
 
+bindBacktestTabs = ->
+  $('#backtestingResultTabs a').click (e) ->
+    e.preventDefault()
+    $(@).tab('show')
+
 ready = ->
   window.loadingThrobber = $("#backtestingChartThrobber")
   window.chartContainer = $("#backtestingChartContainer")
   loadDateRangePicker()
+  bindBacktestTabs()
   bindRunBacktestButton()
 
 $(document).ready(ready)

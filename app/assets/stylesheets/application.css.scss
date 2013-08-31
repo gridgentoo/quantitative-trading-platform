@@ -72,6 +72,10 @@ body {
     font-weight: bold;
   }
 
+  #backtestingResultTabs {
+    display: none;
+  }
+
   form#signalsForm .col-md-1, .col-md-2 {
     padding-right: 4px;
   }

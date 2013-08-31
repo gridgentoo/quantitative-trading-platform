@@ -22,7 +22,18 @@
     <i class="icon-sign-blank icon-throb"></i>
     <i class="icon-sign-blank icon-throb"></i>
   </div>
-  <div id="backtestingChartContainer" style="height: 600px; min-width: 500px"></div>
+  <ul id="backtestingResultTabs" class="nav nav-tabs">
+    <li class="active"><a href="#backtestOverview">Overview</a></li>
+    <li><a href="#backtestTransactions">Transactions</a></li>
+  </ul>
+  <div class="tab-content">
+    <div class="tab-pane active" id="backtestOverview">
+      <div id="backtestingChartContainer" style="height: 600px; min-width: 500px"></div>
+    </div>
+    <div class="tab-pane" id="backtestTransactions">
+      <%= render 'transactions' %>
+    </div>
+  </div>
 </div>
 
 <%= javascript_tag do %>

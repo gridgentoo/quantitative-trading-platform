@@ -10,6 +10,7 @@ class StrategiesController < ApplicationController
     @volume = []
     @position_fill = []
     @daily_rets = []
+    @transactions = []
 
     csv = CSV.read( Rails.root.join('demo', 'mktdata.csv') )
     csv.shift
@@ -44,6 +45,15 @@ class StrategiesController < ApplicationController
       @position_fill << {
         datetime: datetime,
         value: prev >= 0 ? (@position_fill[prev][:value] + r[1].to_i) : r[1].to_i
+      }
+      @transactions << {
+        datetime: datetime,
+        volume: r[1].to_i,
+        price: r[2].to_f,
+        fees: r[3].to_f,
+        value: r[4].to_f,
+        avg_cost: r[5].to_f,
+        realized_pl: r[6].to_f
       }
     end
 
