@@ -74,6 +74,11 @@ body {
 
   #backtestingResultTabs {
     display: none;
+    margin-bottom: 4px;
+
+    a {
+      padding: 8px 12px;
+    }
   }
 
   form#signalsForm .col-md-1, .col-md-2 {
